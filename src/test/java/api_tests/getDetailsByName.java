@@ -1,9 +1,6 @@
 package api_tests;
 
 import apibase.utilities.ApiBase;
-import io.qameta.allure.Description;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,9 +23,7 @@ public class getDetailsByName extends ApiBase {
     }
 
     @Test(description = "Get the value of Date of Birth from name", dataProvider = "newData")
-    @Description("Get the value of Date of Birth from name")
-    @Story("AP-1234")
-    @TmsLink("AP-1234")
+
     public void getDOB(String fName, String lName) {
         domain = getProperty("baseURI_dev");
 

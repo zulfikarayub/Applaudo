@@ -3,7 +3,8 @@ package utilities;
 import com.aventstack.extentreports.ExtentTest;
 import com.github.javafaker.Faker;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import io.qameta.allure.Attachment;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
@@ -11,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -21,11 +23,15 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import pages.automationpractice;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 public class BaseClass extends TestBench {
@@ -40,8 +46,6 @@ public class BaseClass extends TestBench {
     public static automationpractice automationpractice;
     public static JavascriptExecutor js;
 
-    public BaseClass() {
-    }
 
     public static synchronized WebDriver getWebDriver() {
         return tdriver.get();
@@ -139,10 +143,42 @@ public class BaseClass extends TestBench {
 
     }
 
-    @Attachment(value = "Page screenshot", type = "image/png")
-    public byte[] getScreenShotPath(String testCaseName, WebDriver driver1) throws IOException {
-        log.info("screen shot code is called ....");
-        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+//    @Attachment(value = "Page screenshot", type = "image/png")
+//    public String getScreenShotPath(String testCaseName, WebDriver driver1) throws IOException {
+//        log.info("screen shot code is called ....");
+//        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+//    }
+
+    public String getScreenShot(String testCaseName, WebDriver driverScr) throws IOException {
+
+        driverScr = driver;
+
+        String screenshotPath = null;
+
+        try {
+
+            //take screenshot and save it in a file
+
+            File sourceFile = ((TakesScreenshot) driverScr).getScreenshotAs(OutputType.FILE);
+
+            //copy the file to the required path
+
+            File destinationFile = new File(System.getProperty("user.dir") + "\\reports\\" + testCaseName + ".png");
+
+            FileHandler.copy(sourceFile, destinationFile);
+
+            String[] relativePath = destinationFile.toString().split("reports");
+
+            screenshotPath = ".\\" + relativePath[1];
+
+        } catch (Exception e) {
+
+            System.out.println("Failure to take screenshot " + e);
+
+        }
+
+        return screenshotPath;
+
     }
 
     public void FooterDetailListValidation(List<WebElement> elementname, String[] SubMenuName) {

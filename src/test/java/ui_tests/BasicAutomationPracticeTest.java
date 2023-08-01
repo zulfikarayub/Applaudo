@@ -1,8 +1,6 @@
 package ui_tests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
@@ -17,9 +15,6 @@ public class BasicAutomationPracticeTest extends BaseClass {
 
 
     @Test(description = "Add and delete item successfully ")
-    @Description("Add and delete item successfully ")
-    @Story("AP-1")
-    @TmsLink("AP-1")
     public void AddRemoveItem() {
 
         try {
@@ -35,9 +30,6 @@ public class BasicAutomationPracticeTest extends BaseClass {
     }
 
     @Test(description = "Footer store info validation ")
-    @Description("Footer store info validation ")
-    @Story("AP-2")
-    @TmsLink("AP-2")
     public void FooterStoreValidation() {
 
         try {
@@ -61,9 +53,6 @@ public class BasicAutomationPracticeTest extends BaseClass {
 
 
     @Test(description = "Search Validation with positive and negative", dataProvider = "searchData")
-    @Description("Search Validation with positive and negative")
-    @Story("AP-3")
-    @TmsLink("AP-3")
     public void searchProducts(String dateSearch) {
 
         try {

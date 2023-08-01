@@ -1,6 +1,6 @@
 package pages;
 
-import io.qameta.allure.Step;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -67,7 +67,7 @@ public class automationpractice extends BaseClass {
     }
 
 
-    @Step("add product to cart and validating successfully message is displayed")
+   // @Description("add product to cart and validating successfully message is displayed")
     public void addProductFromDashBoard() {
 
         try {
@@ -108,7 +108,7 @@ public class automationpractice extends BaseClass {
         }
     }
 
-    @Step("validate product price and product name in cart page")
+   // @Description("validate product price and product name in cart page")
     public void cartPageDetails() {
 
         try {
@@ -127,7 +127,7 @@ public class automationpractice extends BaseClass {
         }
     }
 
-    @Step("Delete the item from cart ")
+   // @Description("Delete the item from cart ")
     public void deleteItemCart() {
 
         try {
@@ -147,7 +147,7 @@ public class automationpractice extends BaseClass {
         }
     }
 
-    @Step("validate Store info footer")
+   // @Description("validate Store info footer")
     public void FooterStoreInfo() {
         String[] ExpList = new String[]
                 {"Selenium Framework, Research Triangle Park, North Carolina, USA", "Call us now: (347) 466-7432", "Email: support@seleniumframework.com"};
@@ -167,7 +167,7 @@ public class automationpractice extends BaseClass {
         }
     }
 
-    @Step("validate search product with both positive and negative value")
+   // @Description("validate search product with both positive and negative value")
     public void searchProduct(String whatToSearch) {
 
 

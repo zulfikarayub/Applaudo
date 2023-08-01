@@ -1,5 +1,9 @@
 package utilities;
 
+import ExtentReports.ExtentReporterNG;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -9,21 +13,27 @@ import java.io.IOException;
 
 public class Listeners extends BaseClass implements ITestListener {
 
+    ExtentTest test;
+    ExtentReports extent = ExtentReporterNG.getReportObject();
+    ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>();
 
+@Override
     public void onTestStart(ITestResult result) {
         // TODO Auto-generated method stub
+    test = extent.createTest(result.getMethod().getMethodName());
+    extentTest.set(test);
 
 
     }
 
     public void onTestSuccess(ITestResult result) {
-        // TODO Auto-generated method stub
-//            closeDriver();
+        extentTest.get().log(Status.PASS, "Test Passed");
     }
 
     public void onTestFailure(ITestResult result) {
         // TODO Auto-generated method stub
 
+        extentTest.get().fail(result.getThrowable());
         WebDriver driver = null;
         String testMethodName = result.getMethod().getMethodName();
 
@@ -33,8 +43,7 @@ public class Listeners extends BaseClass implements ITestListener {
 
         }
         try {
-            log.info("failure capture screenshot" + testMethodName);
-            getScreenShotPath(testMethodName, driver);
+            extentTest.get().addScreenCaptureFromPath(getScreenShot(testMethodName, driver), result.getMethod().getMethodName());
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -59,7 +68,7 @@ public class Listeners extends BaseClass implements ITestListener {
     }
 
     public void onFinish(ITestContext context) {
-        // TODO Auto-generated method stub
+        extent.flush();
 
     }
 
